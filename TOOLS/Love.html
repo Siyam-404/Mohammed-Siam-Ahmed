@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #f0f0f0;
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container Styles */
+        .container {
+            max-width: 400px;
+            padding: 30px;
+            background: linear-gradient(145deg, #1e1e1e, #262626);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8), 0 6px 6px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            animation: fadeInAnimation 1.5s ease-in-out;
+        }
+
+        h1 {
+            color: #bb86fc;
+            margin-bottom: 20px;
+        }
+
+        /* Form Styles */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #b0b0b0;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            border-radius: 10px;
+            background-color: #1c1c1c;
+            color: #fff;
+            font-size: 16px;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            box-shadow: 0 0 10px #bb86fc;
+            transform: scale(1.02);
+        }
+
+        button[type="submit"] {
+            background-color: #bb86fc;
+            color: #121212;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3700b3;
+            box-shadow: 0px 5px 15px rgba(187, 134, 252, 0.5);
+            transform: scale(1.05);
+        }
+
+        button[type="submit"]:active {
+            transform: scale(0.95);
+        }
+
+        /* Result Styles */
+        #result {
+            font-size: 24px;
+            font-weight: bold;
+            color: #f28b82;
+            margin-top: 20px;
+            animation: fadeInAnimation 1s ease-in-out;
+        }
+
+        /* Animations */
+        @keyframes fadeInAnimation {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Love Calculator</h1>
+        <form>
+            <label for="name1">Your Name:</label>
+            <input type="text" id="name1" name="name1" placeholder="Enter first name">
+            <label for="name2">She's Name:</label>
+            <input type="text" id="name2" name="name2" placeholder="Enter second name">
+            <button type="submit">Calculate Love</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        const resultDiv = document.querySelector('#result');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name1 = document.querySelector('#name1').value.toLowerCase();
+            const name2 = document.querySelector('#name2').value.toLowerCase();
+
+            if (name1 === "zesha" || name2 === "zesha") {
+                resultDiv.innerHTML = `<span style="color: #f28b82;">Team CYBER KNIGHT </span>`;
+            } else if (name1 && name2) {
+                // Simple love calculation algorithm (just for fun!)
+                const loveScore = calculateLoveScore(name1, name2);
+                animateLoveScore(name1, name2, loveScore);
+            } else {
+                resultDiv.innerHTML = `<span style="color: #f28b82;">Masukin Namanya TOLOL</span>`;
+            }
+        });
+
+        function calculateLoveScore(name1, name2) {
+            const combinedName = (name1 + name2).toLowerCase();
+            let score = 0;
+
+            for (let i = 0; i < combinedName.length; i++) {
+                score += combinedName.charCodeAt(i);
+            }
+
+            return Math.floor((score % 100) + 1);
+        }
+
+        function animateLoveScore(name1, name2, loveScore) {
+            let currentScore = 0;
+            resultDiv.innerHTML = ` <span style="color: #bb86fc;">${name1}</span> dan <span style="color: #bb86fc;">${name2}</span> <span id="score">0</span>%`;
+
+            const scoreSpan = document.querySelector('#score');
+
+            const interval = setInterval(() => {
+                scoreSpan.innerText = currentScore;
+                if (currentScore >= loveScore) {
+                    clearInterval(interval);
+                } else {
+                    currentScore++;
+                }
+            }, 30);
+        }
+    </script>
+</body>
+</html>
